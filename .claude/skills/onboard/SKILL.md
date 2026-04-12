@@ -15,20 +15,6 @@ argument-hint: [optional: update]
 
 ## Context Files to Read
 Check if `context-library/couple-profile.md` exists with real data. If yes, offer: start fresh or update what's changed.
-If only `.template.md` files exist (fresh clone), use them as the structure reference and create the real files during onboarding.
-
-## File Creation
-For a fresh clone, the real context files don't exist yet (only `.template.md` versions).
-During onboarding, create each real file using the template structure but populated with the couple's answers:
-- `context-library/couple-profile.md` (from couple-profile.template.md structure)
-- `context-library/preferences.md` (from preferences.template.md structure)
-- `context-library/financials.md` (from financials.template.md structure)
-- `context-library/constraints.md` (from constraints.template.md structure)
-- `context-library/local-context.md` (from local-context.template.md structure)
-- `context-library/memory/past-dates.md` (from past-dates.template.md)
-- `context-library/memory/past-trips.md` (from past-trips.template.md)
-- `context-library/memory/learnings.md` (from learnings.template.md)
-- `context-library/memory/wishlist.md` (from wishlist.template.md)
 
 ## How It Works
 
