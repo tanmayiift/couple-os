@@ -36,8 +36,10 @@ In your Claude Code session:
 /onboard
 ```
 
-This is the only setup required. It takes 20-30 minutes and populates all
-your context files. Once done, every other command works.
+This is the only setup required. It takes about 5 minutes — three quick
+conversational rounds — and populates all your context files. Once done,
+every other command works. You'll get your first date idea at the end of
+onboarding so you can see the system in action immediately.
 
 ## Verifying Setup
 

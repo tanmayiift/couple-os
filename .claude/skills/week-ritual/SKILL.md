@@ -12,7 +12,7 @@ user-invocable: true
 ```
 
 ## Context Files to Read
-preferences, constraints, memory/learnings, outputs/activities/rituals.md (avoid repeats)
+preferences, constraints, memory/learnings. Also check outputs/activities/rituals.md if it exists (avoid repeats — this file won't exist until the first ritual is generated).
 
 ## What a Ritual Is
 - Recurring (weekly or set rhythm)
@@ -35,4 +35,4 @@ NOT a date idea. NOT a one-off. NOT something requiring planning each time.
 ```
 
 ## Save to
-Append to `outputs/activities/rituals.md` (don't overwrite — this file accumulates).
+Append to `outputs/activities/rituals.md` (create if it doesn't exist; don't overwrite — this file accumulates).
