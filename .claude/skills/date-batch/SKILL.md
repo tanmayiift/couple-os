@@ -3,70 +3,45 @@ name: date-batch
 description: Generate four date ideas for the coming month. Engineered for variety — no two alike in energy, setting, or cost.
 disable-model-invocation: false
 user-invocable: true
+argument-hint: [optional: month name]
 ---
 
 ## Quick Start
 
 ```
 /date-batch                 → Four dates for this month
-/date-batch [month]         → Plan ahead (e.g., /date-batch december)
+/date-batch december        → Plan ahead for a specific month
 ```
 
-**What you get:** A month-long date plan: 4 suggestions, each different in
-character. Saved to `outputs/dates/`.
+## Context Files to Read
+profile, preferences, financials, constraints, local-context, memory/past-dates, memory/learnings
 
-**Time:** 3-5 minutes.
-
----
-
-## Pre-Flight: Context Check
-
-Same as `/date-idea`. Read all context files before generating.
-Check `memory/past-dates.md` — none of the 4 suggestions can appear there.
-
----
-
-## Variety Matrix
-
-The 4 suggestions must collectively satisfy this matrix:
-
-| | Indoor | Outdoor |
-|---|--------|---------|
-| **Low effort** | ✓ required | |
-| **Medium effort** | | |
-| **Higher effort** | | ✓ required |
-
-Also ensure:
-- At least 1 is free or near-free
-- At least 1 involves leaving home
-- At least 1 could work on a weeknight
-- No two suggestions are in the same category (food, culture, nature, creative, etc.)
-
----
+## Variety Rules
+The 4 dates must collectively include:
+- At least 1 indoor low-effort and 1 outdoor higher-effort
+- At least 1 free or near-free
+- At least 1 that works on a weeknight
+- No two in the same category (food, culture, nature, creative, etc.)
+- None in memory/past-dates.md
 
 ## Output Format
 
-```markdown
+```
 # Date Plan — [Month YYYY]
 
-Four dates for the month ahead. Different energy, different settings. Use them in
-any order — or save them for when the mood fits.
+Four dates for the month. Different energy, different settings.
 
 ---
 
 ## Week 1: [Title]
 **What:** [Description]
-**Why now:** [Why it fits this time of year / their current context]
-**Time:** [X hours] | **Cost:** [$ range] | **Works on:** [Weeknight / Weekend]
-
----
+**Why now:** [Why this fits the time of year / their context]
+**Time:** [X hours] | **Cost:** [range] | **Works on:** [Weeknight / Weekend]
 
 ## Week 2: [Title]
 **What:** [Description]
-**Why now:** [Same]
-**Time:** [X hours] | **Cost:** [$ range] | **Works on:** [Weeknight / Weekend]
-
----
+**Why now:** [context]
+**Time:** [X hours] | **Cost:** [range] | **Works on:** [Weeknight / Weekend]
 
 ## Week 3: [Title]
 ...
@@ -75,11 +50,8 @@ any order — or save them for when the mood fits.
 ...
 
 ---
-*Run `/remember` after each one to log what worked.*
+*Run /feedback after each one to log what worked.*
 ```
 
----
-
-## Save Output
-
-Save to: `outputs/dates/[YYYY-MM]-date-batch.md`
+## Save to
+`outputs/dates/[YYYY-MM]-date-batch.md`

@@ -114,11 +114,11 @@ handles what and where — the couple handles logistics.
 
 If context files are mostly empty (contain only template text):
 ```
-Your context files haven't been filled in yet. Run /onboard and I'll guide you
-through a 20-minute intake that will make every suggestion you get after this
-feel like it was written specifically for you.
+Your context files haven't been filled in yet. Run /onboard and I'll walk you
+through a quick setup — about 5 minutes — then generate your first date idea
+on the spot so you can see how this works.
 
-Want to start now?
+Want to start?
 ```
 
 If only one or two files are sparse:
@@ -155,3 +155,44 @@ When the couple uses /remember, identify the correct file to update:
 | Profile change (moved, new job, etc.) | couple-profile.md or constraints.md |
 
 After updating, always confirm: "Got it. Updated [filename] with: [what was added]."
+
+---
+
+## Auto-Learning Protocol
+
+During any conversation, if the couple says anything that implies a preference,
+reaction, or change (positive or negative), offer to update the relevant memory
+file at the end of that turn. Say: "Want me to note that in your learnings?"
+Don't update silently — confirm first, then update.
+
+Examples of signals to detect:
+- "that place was too loud" → offer to add to learnings.md
+- "we loved the evening walk" → offer to add to learnings.md
+- "we want to try kayaking" → offer to add to wishlist.md
+- "we're moving to Bangalore next month" → offer to update couple-profile.md
+
+---
+
+## Post-Activity Prompt
+
+After generating any date, trip, or activity suggestion and saving it to outputs/,
+append this line at the bottom of the saved file:
+
+```
+---
+*Done this? Tell me how it went — or run /feedback for a quick 3-question debrief.*
+```
+
+This creates a natural feedback loop without forcing the couple to remember commands.
+
+---
+
+## Session-End Memory Check
+
+If the current session contained any feedback signals (words like: loved, hated,
+too crowded, too expensive, perfect, boring, again, never again, next time, wasn't
+great, amazing), end the session response by asking:
+
+"Want me to save anything from today's conversation to your memory files?"
+
+This catches preferences that would otherwise be lost between sessions.
