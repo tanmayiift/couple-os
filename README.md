@@ -86,7 +86,7 @@ After that, run `/date-idea` anytime you need a plan.
 Couple OS starts useful and gets better the more you use it.
 
 **Active feedback:**
-- Run `/feedback` after any date or trip for a quick 3-question debrief
+- Run `/feedback` after any date or trip for a quick 4-question debrief (includes sentiment tags)
 - Run `/remember` anytime to tell it something new ("partner hates loud restaurants," "we want to try kayaking")
 
 **Passive learning:**
@@ -126,6 +126,7 @@ couple-os/
 │   ├── memory-jar/SKILL.md           # Favourite moments log
 │   ├── milestone-letter/SKILL.md     # Anniversary/milestone letters
 │   ├── streak/SKILL.md               # Date habit tracker
+│   ├── surprise/SKILL.md             # Surprise planner (local only)
 │   ├── week-ritual/SKILL.md          # Weekly ritual builder
 │   ├── remember/SKILL.md             # Update any context
 │   └── feedback/SKILL.md             # Post-date debrief
@@ -151,7 +152,8 @@ couple-os/
 │   ├── trips/
 │   ├── activities/
 │   ├── check-ins/
-│   └── letters/                      # Milestone letters
+│   ├── letters/                      # Milestone letters
+│   └── surprises/                    # Surprise plans (gitignored)
 └── setup/
     ├── installation-guide.md
     └── first-session-checklist.md
@@ -161,9 +163,13 @@ couple-os/
 
 ## Privacy
 
-All data stays on your machine. The context files (your names, budget, preferences) are plain markdown in this directory. They're gitignored by default so they never get committed.
+All personal data stays on your machine by default. The context files (your names, budget, preferences) are plain markdown in this directory and are gitignored.
 
-Nothing is sent to any server except your prompts to Claude via the standard Claude Code API (same as any Claude conversation).
+**Optional Notion sync:** Run `/init` to set up a shared Notion workspace with your partner. When connected, memory files (past dates, learnings, wishlist, memory jar, etc.) sync to Notion so both partners see the same data. Local markdown files stay as backup. The 5 core profile files (couple-profile, preferences, financials, constraints, local-context) never sync — they stay local only.
+
+`/surprise` outputs never sync to Notion. Ever. The whole point is that the other partner doesn't see it coming.
+
+Nothing else is sent to any server except your prompts to Claude via the standard Claude Code API (same as any Claude conversation).
 
 You can use aliases instead of real names. You can skip any question during onboarding. More detail means better suggestions, but it's always your call.
 
@@ -179,38 +185,51 @@ This is a template. Everything is meant to be changed:
 
 ---
 
+## Personalisation Engine
+
+Couple OS doesn't just track what you've done — it learns *why* things worked.
+
+**Sentiment tags.** After each date, `/feedback` asks what made it work. Tags like `intimate`, `new-discovery`, `energising`, `creative`, `social` get stored against your dates. After 5+ entries, the system identifies your dominant positive tags and biases new suggestions toward them.
+
+**Seasonal patterns.** Every logged date is auto-tagged with season + indoor/outdoor. After 6+ months, the system knows your seasonal patterns ("more home dates in monsoon, more outdoor dates in autumn") and calibrates accordingly.
+
+**Anti-pattern detection.** Every suggestion the system generates — even ones you don't try — is logged to `outputs/suggestion-log.md`. Before generating a new one, it checks the log to avoid clustering. If 3 of the last 5 were food-based, it forces a different category.
+
+**Anniversary proximity.** Reads your anniversary date from your profile. Within 30 days of it, biases one suggestion toward "milestone-worthy." Within 7 days, makes the primary suggestion anniversary-calibrated.
+
+**Relationship phase awareness.** Year 1 couples get "still discovering each other" energy. Year 5+ get "surprise me" energy. The system reads your stage and adjusts.
+
+**Partner-specific weighting.** `/date-idea for-[name]` generates something that leans 70% toward one partner's preferences while keeping the other partner engaged in a supporting role.
+
+---
+
 ## Command Details
 
 ### `/onboard` — First-Time Setup
 
-Three conversational rounds:
-1. **Who are you two?** Names, city, relationship stage, living situation
-2. **What makes you tick?** Interests, food, energy level, wishlist, hard nos
-3. **Logistics and money** Budget, schedules, transport, local favorites
+Five conversational blocks: profile, preferences, financials, constraints, local context. Geography (nearby cities, airports, climate) is auto-populated from your city — you only answer things only you would know. Ends with your first `/date-idea` on the spot.
 
-Geography (nearby cities, airports, climate) is auto-populated from your city. You only answer things only you would know.
+### `/init` — Notion Setup (Optional)
 
-Ends by generating your first `/date-idea` so you see the payoff immediately.
+Step-by-step guided setup for shared memory between partners. Walks through creating the Notion workspace, the 7 sub-pages, the API integration, and connecting Claude Code. Run once per couple. Skip if you only want local storage.
 
 ### `/date-idea` — Weekly Date Suggestion
 
-Flags: `low-effort`, `splurge`, `outdoor`, or any weekday name.
+Flags: `low-effort`, `splurge`, `outdoor`, any weekday name, or `for-[partner-name]`.
 
-Returns 1 primary suggestion with full detail + 2 alternatives at different effort levels. References your preferences, budget, and location. Checks past dates to avoid repeats.
+Returns 1 primary suggestion + 2 alternatives at different effort levels. Reads sentiment patterns, seasonal patterns, and anniversary proximity. The `for-[name]` variant leans into one partner's individual preferences.
+
+### `/mood-match` — Energy-Calibrated Tonight
+
+The daily layer missing from `/date-idea`. Asks two questions first — energy level (1-5) and mood (adventurous / cosy / social / just us) — then suggests one thing calibrated to right now. No alternatives, no padding. For decisive evenings.
 
 ### `/date-batch` — Monthly Date Plan
 
-Four dates for the month. Engineered for variety:
-- At least 1 indoor + 1 outdoor
-- At least 1 free + 1 paid
-- At least 1 weeknight-friendly
-- No two in the same category
+Four dates for the month. Engineered for variety: at least 1 indoor + 1 outdoor, at least 1 free + 1 paid, at least 1 weeknight-friendly, no two in the same category.
 
 ### `/trip-idea` — Trip Destination
 
-Flags: `weekend`, `week`, `long-haul`, any season, or `options` (for 3 brief picks).
-
-Deep-dive format: what to do there, day structure, food culture, activity budget, best time to visit, and why it fits you specifically. No hotel or flight recommendations.
+Flags: `weekend`, `week`, `long-haul`, any season, or `options` (for 3 brief picks). Deep-dive format: what to do, day structure, food culture, activity budget, best time, why it fits. No hotel or flight recommendations. Reads anniversary proximity and sentiment patterns.
 
 ### `/activity-pack` — Shared Activities
 
@@ -222,16 +241,35 @@ Five open-ended questions calibrated to your relationship stage. Not therapy. Va
 
 ### `/week-ritual` — Weekly Ritual
 
-One small recurring habit: anchored to a specific time, sustainable, and specific to your life. Appended to a running list so you build a collection over time.
+One small recurring habit: anchored to a specific time, sustainable, specific to your life. Appended to a running list so you build a collection.
+
+### `/vibe-check` — Quarterly Preference Quiz
+
+Both partners answer the same 10 questions separately, then `/vibe-check compare` produces a divergence report. Catches preference drift since onboarding and suggests profile updates. Run quarterly.
+
+### `/memory-jar` — Favourite Moments Log
+
+Add or read favourite shared moments. Not dates — the small things worth keeping. The wrong turn that became a story. The Sunday on the terrace. Run `/memory-jar read` on bad days. Memory jar entries are *never* used as input to suggestions — they exist only for looking back.
+
+### `/milestone-letter` — Letters in Your Voice
+
+Reads everything — past dates, trips, learnings, memory jar, wishlist — and writes a short letter to you about the period just passed. Variants: `anniversary`, `after-trip`, `monthly`, or any custom milestone. Letters get longer and more specific the more you use the system.
+
+### `/streak` — Date Habit Tracker
+
+Shows consecutive months of logged dates with feedback. Quiet milestone messages at 1, 3, 6, 12, 18, 24 months. Broken streaks reset without shame. The habit is the reward.
+
+### `/surprise [partner-name]` — Surprise Planner (Local Only)
+
+One partner runs it solo. Reads the recipient's individual preferences (personality, interests, comfort zones) and generates a plan calibrated specifically for them, with the planner in the supporting role. Includes a setup checklist, timing, and a backup plan. **Never syncs to Notion.** Stays in `outputs/surprises/` (gitignored) until the couple chooses to log it via `/feedback` after the fact.
 
 ### `/feedback` — Post-Activity Debrief
 
-Three questions: What was it? How did it go? One thing to remember?
-Updates memory files automatically. Under 2 minutes. This is what makes future suggestions smarter.
+Four questions: What was it? How did it go? What made it work (sentiment tags)? One thing to remember? Auto-tags the entry with season, setting (indoor/outdoor), and category. Updates past-dates, learnings (sentiment + seasonal patterns), and the suggestion log. Under 2 minutes. This is what makes future suggestions smarter.
 
 ### `/remember` — Update Anything
 
-Natural language updates to any context file. "We loved the hiking date." "Partner gets anxious in crowds." "We're moving to Berlin in October." It routes to the right file and confirms what changed.
+Natural language updates to any context or memory file. "We loved the hiking date." "Partner gets anxious in crowds." "We're moving to Berlin in October." Routes to the right file and syncs to Notion if connected.
 
 ---
 
@@ -242,6 +280,32 @@ PRs welcome. Especially interested in:
 - Better output formats
 - Non-English locale support
 - Quality-of-life improvements
+
+---
+
+## Changelog
+
+### v1.2 — Notion sync, emotional memory, personalisation engine
+- 7 new skills: `/mood-match`, `/vibe-check`, `/memory-jar`, `/milestone-letter`, `/streak`, `/surprise`, `/init`
+- Optional shared memory via Notion MCP — both partners see the same data
+- Sentiment tags on every feedback (13 tags) — system learns *why* dates work
+- Seasonal pattern tracking — auto-calibrates to your time of year after 6+ months
+- Partner-specific date suggestions via `/date-idea for-[name]`
+- Anti-pattern detection via suggestion log — catches clustering before it happens
+- Anniversary proximity detection in date-idea and trip-idea
+- Relationship phase awareness (Year 1 vs 5+ get different energy)
+- Quality rules expanded from 6 to 9
+
+### v1.1 — Auto-learning and feedback
+- Added `/feedback` skill with 3-question debrief
+- Auto-learning protocol — captures preferences from natural conversation
+- Token optimization across all skills
+- README improvements
+
+### v1.0 — Initial release
+- 9 core skills: `/onboard`, `/date-idea`, `/date-batch`, `/trip-idea`, `/activity-pack`, `/checkin`, `/week-ritual`, `/remember`, `/feedback`
+- Local-first context library
+- Quality rules engine
 
 ---
 
