@@ -15,6 +15,12 @@ outputs/dates/*.md
 outputs/trips/*.md
 outputs/activities/*.md
 outputs/check-ins/*.md
+outputs/letters/*.md
+outputs/surprises/*.md
+outputs/suggestion-log.md
+
+# Keep .gitkeep files so directories exist
+!outputs/**/.gitkeep
 
 # System files
 .DS_Store

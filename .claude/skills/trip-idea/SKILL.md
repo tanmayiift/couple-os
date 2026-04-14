@@ -18,7 +18,28 @@ argument-hint: [optional: weekend | week | long-haul | season | options]
 ```
 
 ## Context Files to Read
-profile, preferences, financials, constraints, local-context, memory/past-trips, memory/wishlist
+profile, preferences, financials, constraints, local-context, memory/past-trips, memory/wishlist, memory/learnings
+
+## Anniversary & Milestone Detection
+
+Before generating, check couple-profile.md for the wedding/anniversary date.
+
+**Within 60 days of anniversary:**
+- Suggest the trip as a potential anniversary trip. Frame timing accordingly.
+- Pull from wishlist — international travel, adventure activities they've mentioned.
+
+**Within 30 days:**
+- Make it the primary angle: "Your [Nth] anniversary is [date] — here's a trip
+  that fits the window."
+
+**Relationship phase awareness:**
+- Year 1: First international trip together as married. New territory, discovery.
+- Year 2-3: Deeper, more immersive trips. Cooking classes, slow travel.
+- Year 5+: Challenge trips. Trek, new continent, something they'd tell stories about.
+
+**Also check:** sentiment patterns in learnings.md. If their best-rated
+experiences lean `adventurous` or `new-discovery`, push the trip toward exploration.
+If they lean `intimate` or `relaxing`, suggest slower-paced destinations.
 
 ## Scope
 Covers: destination, activities, food culture, best time, activity budget, why it fits.

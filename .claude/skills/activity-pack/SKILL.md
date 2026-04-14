@@ -16,7 +16,7 @@ argument-hint: [optional: hobbies | rituals | creative]
 ```
 
 ## Context Files to Read
-preferences, constraints, memory/learnings, memory/wishlist
+couple-profile, preferences, constraints, memory/learnings, memory/wishlist
 
 ## Variety Rules
 - At least 1 recurring ritual (not one-off)

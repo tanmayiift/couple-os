@@ -96,6 +96,13 @@ handles what and where — the couple handles logistics.
 | /week-ritual | profile, preferences, constraints | learnings |
 | /remember | The specific file being updated | learnings |
 | /onboard | None (this builds the context) | — |
+| /mood-match | preferences, financials, local-context, past-dates | learnings, wishlist, profile |
+| /vibe-check | profile, preferences, financials | vibe-check-history |
+| /memory-jar | profile | memory-jar |
+| /milestone-letter | profile, preferences, past-dates, past-trips, learnings, memory-jar, wishlist | vibe-check-history |
+| /streak | profile, past-dates, streak | memory-jar (for milestones) |
+| /surprise | profile, preferences, financials, constraints, local-context, past-dates, learnings, wishlist | — (NEVER syncs to Notion) |
+| /init | None (this sets up Notion) | — |
 
 ---
 
@@ -196,3 +203,45 @@ great, amazing), end the session response by asking:
 "Want me to save anything from today's conversation to your memory files?"
 
 This catches preferences that would otherwise be lost between sessions.
+
+---
+
+## Notion Memory Integration
+
+When Notion MCP is connected, memory files live in Notion instead of local markdown.
+Always prefer Notion over local files when the MCP is available.
+
+### Page Mapping
+
+| Local file | Notion page |
+|-----------|-------------|
+| memory/past-dates.md | "Past Dates" |
+| memory/past-trips.md | "Past Trips" |
+| memory/learnings.md | "Learnings" |
+| memory/wishlist.md | "Wishlist" |
+| memory/memory-jar.md | "Memory Jar" |
+| memory/streak.md | "Streak" |
+| memory/vibe-check-history.md | "Vibe Check History" |
+
+### Read Protocol
+
+Before any suggestion command:
+1. Check if Notion MCP is available (attempt a simple read)
+2. If yes: read from Notion pages
+3. If no: fall back to local memory/ markdown files
+4. Never fail silently — if Notion read fails, say so and use local fallback
+
+### Write Protocol
+
+After any /feedback, /remember, /mood-match, /vibe-check, /memory-jar, /streak:
+1. Write update to Notion page
+2. Also write to local markdown file as backup
+3. Confirm: "Saved to Notion — both partners will see this update"
+
+### Two-Partner Awareness
+
+Memory pages are shared between both partners.
+When reading Learnings or Past Dates, you may see entries from both.
+Attribute entries correctly — "Partner 1 noted:" vs "Partner 2 noted:"
+When preferences diverge between partners, flag it and calibrate toward
+the more constrained preference unless a flag overrides it.

@@ -32,8 +32,19 @@ argument-hint: <what to remember>
 - If ambiguous, ask one clarifying question.
 - If it contradicts existing context, flag it before overwriting.
 
+## Notion Sync
+
+For memory files (past-dates, past-trips, learnings, wishlist):
+1. Write update to corresponding Notion page first (if MCP is available)
+2. Also write to local markdown file as backup
+3. If Notion write fails, write locally and note: "Saved locally — Notion sync failed."
+
+For context files (couple-profile, preferences, financials, constraints, local-context):
+- Write locally only (these don't sync to Notion)
+
 ## Confirmation
 ```
 Got it. Updated `context-library/memory/[file]`:
 → [what was added]
+[If Notion connected:] Saved to Notion — both partners will see this update.
 ```

@@ -16,7 +16,7 @@ argument-hint: [optional: after-date | after-trip | monthly]
 ```
 
 ## Context Files to Read
-profile, memory/past-dates (for after-date), memory/past-trips (for after-trip), memory/learnings
+couple-profile, constraints, memory/past-dates (for after-date), memory/past-trips (for after-trip), memory/learnings
 
 ## Scope Boundary
 Conversation prompts only. NOT relationship advice, diagnosis, or therapy.

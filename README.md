@@ -8,17 +8,42 @@ Everything runs locally. No app, no server, no subscription.
 
 ## What It Does
 
-| Command | What you get |
+### Daily
+| Command | What it does |
 |---------|-------------|
-| `/onboard` | 5-minute setup interview, then your first date idea on the spot |
-| `/date-idea` | One date suggestion + 2 alternatives for this week |
-| `/date-batch` | Four dates for the month ahead (engineered for variety) |
-| `/trip-idea` | Destination + what to do there (no hotels or flights) |
-| `/activity-pack` | Five shared hobbies, rituals, and projects to try |
-| `/checkin` | Five conversation starters tailored to your relationship stage |
-| `/week-ritual` | One recurring weekly ritual to build into your routine |
-| `/remember` | Update your profile anytime ("we loved that," "we're moving") |
-| `/feedback` | Quick 3-question debrief after any date, trip, or activity |
+| `/mood-match` | Date idea calibrated to tonight's energy — asks 2 questions first |
+| `/date-idea` | Best date for this week + 2 alternatives |
+| `/date-idea for-[name]` | Date that leans into one partner's preferences |
+| `/surprise [name]` | Plan a surprise for your partner (stays local, never syncs) |
+
+### Planning
+| Command | What it does |
+|---------|-------------|
+| `/date-batch` | 4 dates for the month ahead |
+| `/trip-idea` | Next getaway — destination + what to do (no hotels/flights) |
+| `/activity-pack` | 5 shared activities, hobbies, rituals to try |
+| `/week-ritual` | One recurring weekly ritual to add |
+
+### Know Each Other Better
+| Command | What it does |
+|---------|-------------|
+| `/vibe-check` | Quarterly quiz — both answer separately, then compare |
+| `/checkin` | Conversation starters tailored to your stage |
+
+### Capture and Celebrate
+| Command | What it does |
+|---------|-------------|
+| `/memory-jar` | Add or read favourite shared moments |
+| `/milestone-letter` | A letter in your own voice about the period just passed |
+| `/streak` | Consecutive months of logged dates — your habit score |
+
+### System
+| Command | What it does |
+|---------|-------------|
+| `/onboard` | One-time intake — populates all context files |
+| `/init` | Guided Notion setup — connects shared memory with your partner |
+| `/feedback` | Rate the date — updates memory, improves suggestions |
+| `/remember` | Tell the system anything new about you |
 
 Every suggestion includes a title, time estimate, cost estimate, and a "why it fits you" section that references your actual context. If a suggestion could apply to any random couple, the system rewrites it.
 
@@ -68,11 +93,16 @@ Couple OS starts useful and gets better the more you use it.
 - During any conversation, if you mention a preference or reaction, it'll ask: "Want me to note that?"
 - After every suggestion it saves, it appends a prompt: "Done this? Tell me how it went."
 
-**What it tracks (all local, all yours):**
+**What it tracks (local + Notion sync):**
 - `memory/past-dates.md` — dates tried + ratings (avoids repeats)
 - `memory/past-trips.md` — trips taken (avoids repeat destinations)
 - `memory/learnings.md` — discovered preferences ("prefers small venues," "best dates are unplanned")
 - `memory/wishlist.md` — things you've said you want to try
+- `memory/memory-jar.md` — favourite shared moments, in your own words
+- `memory/streak.md` — consecutive months of logged dates
+- `memory/vibe-check-history.md` — quarterly preference snapshots from both partners
+
+When Notion is connected (via `/init`), all memory syncs to a shared Notion workspace so both partners see the same data. Local files stay as backup.
 
 The richer these files get, the more specific every suggestion becomes.
 
@@ -84,15 +114,21 @@ The richer these files get, the more specific every suggestion becomes.
 couple-os/
 ├── CLAUDE.md                          # System brain — read every session
 ├── .claude/skills/                    # Slash commands
-│   ├── onboard/SKILL.md
-│   ├── date-idea/SKILL.md
-│   ├── date-batch/SKILL.md
-│   ├── trip-idea/SKILL.md
-│   ├── activity-pack/SKILL.md
-│   ├── checkin/SKILL.md
-│   ├── remember/SKILL.md
-│   ├── feedback/SKILL.md
-│   └── week-ritual/SKILL.md
+│   ├── onboard/SKILL.md              # First-time setup
+│   ├── init/SKILL.md                 # Notion integration setup
+│   ├── date-idea/SKILL.md            # Weekly date suggestion
+│   ├── date-batch/SKILL.md           # Monthly date plan
+│   ├── mood-match/SKILL.md           # Energy-calibrated date tonight
+│   ├── trip-idea/SKILL.md            # Trip destination + concept
+│   ├── activity-pack/SKILL.md        # Shared hobbies and rituals
+│   ├── checkin/SKILL.md              # Conversation starters
+│   ├── vibe-check/SKILL.md           # Quarterly preference quiz
+│   ├── memory-jar/SKILL.md           # Favourite moments log
+│   ├── milestone-letter/SKILL.md     # Anniversary/milestone letters
+│   ├── streak/SKILL.md               # Date habit tracker
+│   ├── week-ritual/SKILL.md          # Weekly ritual builder
+│   ├── remember/SKILL.md             # Update any context
+│   └── feedback/SKILL.md             # Post-date debrief
 ├── context-library/                   # Your couple profile (gitignored)
 │   ├── couple-profile.md
 │   ├── preferences.md
@@ -103,14 +139,19 @@ couple-os/
 │       ├── past-dates.md
 │       ├── past-trips.md
 │       ├── learnings.md
-│       └── wishlist.md
+│       ├── wishlist.md
+│       ├── memory-jar.md             # Favourite shared moments
+│       ├── streak.md                 # Date habit tracking
+│       └── vibe-check-history.md     # Quarterly preference snapshots
 ├── context-library/*.template.md      # Blank templates (shipped with repo)
+├── sync/notion-setup.md               # Notion integration guide
 ├── sub-agents/quality-rules.md        # Output quality enforcement
 ├── outputs/                           # Generated suggestions
 │   ├── dates/
 │   ├── trips/
 │   ├── activities/
-│   └── check-ins/
+│   ├── check-ins/
+│   └── letters/                      # Milestone letters
 └── setup/
     ├── installation-guide.md
     └── first-session-checklist.md
