@@ -167,6 +167,12 @@ All personal data stays on your machine by default. The context files (your name
 
 **Optional Notion sync:** Run `/init` to set up a shared Notion workspace with your partner. When connected, memory files (past dates, learnings, wishlist, memory jar, etc.) sync to Notion so both partners see the same data. Local markdown files stay as backup. The 5 core profile files (couple-profile, preferences, financials, constraints, local-context) never sync — they stay local only.
 
+**What you do vs what Claude does during `/init`:**
+- You create: one Notion account, one top-level page ("Couple OS Memory"), one integration token. That's it.
+- Claude creates: all 7 sub-pages automatically once connected. No manual page creation needed.
+
+**Notion pages are private, not public.** Share only with your partner via email (Editor access) through Notion's Share menu. Never enable "Share to web."
+
 `/surprise` outputs never sync to Notion. Ever. The whole point is that the other partner doesn't see it coming.
 
 Nothing else is sent to any server except your prompts to Claude via the standard Claude Code API (same as any Claude conversation).
@@ -211,7 +217,21 @@ Five conversational blocks: profile, preferences, financials, constraints, local
 
 ### `/init` — Notion Setup (Optional)
 
-Step-by-step guided setup for shared memory between partners. Walks through creating the Notion workspace, the 7 sub-pages, the API integration, and connecting Claude Code. Run once per couple. Skip if you only want local storage.
+Interactive guided setup for shared memory between partners. Run once per couple, skip if you only want local storage.
+
+**What you do manually (~10 min):**
+1. Create a free Notion account at notion.so
+2. Create one top-level page called "Couple OS Memory"
+3. Go to notion.so/my-integrations → create an integration called "Couple OS" → copy the `secret_` token
+4. Connect the integration to your page (··· menu → Add connections)
+5. Add `export NOTION_API_KEY="your_token"` to `~/.zshrc` and restart Claude Code
+6. Share the page with your partner by email (Editor access) — keep it private, never enable "Share to web"
+
+**What Claude does automatically:**
+- Creates all 7 sub-pages (Past Dates, Past Trips, Learnings, Wishlist, Memory Jar, Streak, Vibe Check History)
+- Populates structure, records page IDs, verifies the connection
+
+Run `/init` and it walks through every step interactively.
 
 ### `/date-idea` — Weekly Date Suggestion
 

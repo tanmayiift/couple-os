@@ -11,6 +11,24 @@ Walk the couple through setting up Notion as their shared memory backend.
 This replaces the manual instructions in sync/notion-setup.md with an
 interactive, step-by-step guide that waits for confirmation at each stage.
 
+## What the user has to do vs what I do
+
+**User does (manual, requires a browser):**
+- Create a Notion account (if they don't have one)
+- Create one top-level page called "Couple OS Memory"
+- Create the Notion integration and copy the token
+- Connect the integration to that page
+- Add the token to their shell profile
+
+**I do automatically (once connected):**
+- Create all 7 sub-pages inside "Couple OS Memory"
+- Populate them with the correct structure
+- Record the page IDs
+- Verify the connection
+
+**Privacy:** Pages should NEVER be made public. Share only with the partner
+by email (Editor access) via Notion's Share menu. Not shared to web.
+
 ## Workflow
 
 ### Step 0: Check current state
@@ -33,49 +51,28 @@ Say:
 Let's get Notion set up so both you and [Partner 2 name from couple-profile.md] can share memories,
 dates, and everything else from this system.
 
-**Step 1: Create the Notion pages**
+You only need to do 3 things manually — I'll handle the rest once connected.
 
-1. Go to notion.so and sign in (or create a free account)
+**Step 1: Create one Notion page**
+
+1. Go to notion.so and sign in (or create a free account — it's free)
 2. Create a new top-level page called "Couple OS Memory"
-3. Inside that page, create these 7 sub-pages:
-   - Past Dates
-   - Past Trips
-   - Learnings
-   - Wishlist
-   - Memory Jar
-   - Streak
-   - Vibe Check History
 
-Just blank pages for now — I'll populate them.
+That's it for now. Don't create any sub-pages — I'll create all 7 automatically
+once the connection is live.
 
-Tell me when you've created all 7 pages.
+Tell me when the page exists.
 ```
 
 Wait for confirmation before proceeding.
 
-### Step 2: Share with partner
+### Step 2: Create the Notion integration
 
 Say:
 ```
-**Step 2: Share with [Partner 2 name]**
+**Step 2: Create the API integration**
 
-On the "Couple OS Memory" page:
-1. Click "Share" in the top right
-2. Invite [Partner 2 name]'s email with "Editor" access
-3. She'll get an invite to join the workspace
-
-Done? Let's set up the integration next.
-```
-
-Wait for confirmation.
-
-### Step 3: Create the Notion integration
-
-Say:
-```
-**Step 3: Create the API integration**
-
-This lets Claude Code read and write to your Notion pages.
+This is what lets me read and write to your Notion pages.
 
 1. Go to notion.so/my-integrations
 2. Click "+ New integration"
@@ -84,68 +81,90 @@ This lets Claude Code read and write to your Notion pages.
 5. Click "Submit"
 6. You'll see an "Internal Integration Secret" — copy it (starts with `secret_`)
 
-Now connect it to your pages:
+Now connect it to your page:
 7. Go back to your "Couple OS Memory" page in Notion
 8. Click the ··· menu (top right)
 9. Click "Add connections"
 10. Search for "Couple OS" and select it
 
-Paste the secret token here when you're ready (I won't store it in any file —
-it goes straight to your shell profile).
+Paste the secret token here when ready. I won't store it in any file —
+it goes straight to your shell profile.
 ```
 
 Wait for the token.
 
-### Step 4: Save the API key
+### Step 3: Save the API key
 
 When they paste the token, verify it starts with `secret_`.
 
 Say:
 ```
-**Step 4: Save to your shell**
+**Step 3: Save to your shell**
 
-Run this in your terminal (outside Claude Code):
+Run this in your terminal (a separate tab, outside Claude Code):
 
-```
 echo 'export NOTION_API_KEY="[THEIR_TOKEN]"' >> ~/.zshrc
 source ~/.zshrc
+
+Then restart Claude Code so it picks up the new variable.
+
+Tell [Partner 2 name] to do the same on her machine with the same token —
+she'll need it to see the shared memory too.
+
+Come back and run /init once restarted — I'll verify and finish the setup.
 ```
 
-Then restart Claude Code so it picks up the new environment variable.
-
-Tell [Partner 2 name] to do the same on her machine with the same token.
-
-Come back and type /init after restarting — I'll verify the connection.
-```
-
-### Step 5: Verify connection
+### Step 4: Verify connection + auto-create sub-pages
 
 If NOTION_API_KEY is set, attempt to list Notion pages using the MCP.
 
 If successful:
+- Automatically create the 7 sub-pages inside "Couple OS Memory":
+  - Past Dates
+  - Past Trips
+  - Learnings
+  - Wishlist
+  - Memory Jar
+  - Streak
+  - Vibe Check History
+- Populate each with the correct table/list structure matching local markdown files
+
+Then say:
 ```
-Connected. I can see your Couple OS Memory pages:
-[list the pages found]
+Connected. I've created all 7 memory pages inside "Couple OS Memory":
+✓ Past Dates
+✓ Past Trips
+✓ Learnings
+✓ Wishlist
+✓ Memory Jar
+✓ Streak
+✓ Vibe Check History
 
 **Setup complete.** From now on:
 - Every /feedback, /remember, /memory-jar update saves to Notion
 - Both you and [Partner 2 name] see the same memory
 - Local markdown files stay as backup
 
+One last thing — share the workspace with [Partner 2 name]:
+1. Open "Couple OS Memory" in Notion
+2. Click "Share" (top right)
+3. Invite [Partner 2 name]'s email with "Editor" access
+4. Do NOT enable "Share to web" — keep it private between you two
+
 Your shared memory is live.
 ```
 
-If failed:
+If connection failed:
 ```
 I can see the API key but can't reach your pages. Common fixes:
-1. Make sure you added the "Couple OS" connection to the page (Step 3, items 7-10)
+1. Make sure you connected "Couple OS" to the page (Step 2, items 7-10)
 2. Make sure the token is correct (starts with secret_)
 3. Try restarting Claude Code one more time
 
 Want to try again?
 ```
 
-### Step 6: Record page IDs
+### Step 5: Record page IDs
 
 After successful connection, read the Notion pages and save their IDs
 to sync/notion-setup.md in the Page IDs section.
