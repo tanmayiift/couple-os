@@ -22,6 +22,9 @@ outputs/suggestion-log.md
 # Keep .gitkeep files so directories exist
 !outputs/**/.gitkeep
 
+# Notion setup contains personal page IDs — stays local
+sync/notion-setup.md
+
 # System files
 .DS_Store
 Thumbs.db
