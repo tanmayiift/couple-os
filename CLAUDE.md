@@ -208,8 +208,8 @@ This catches preferences that would otherwise be lost between sessions.
 
 ## Notion Memory Integration
 
-When Notion MCP is connected, memory files live in Notion instead of local markdown.
-Always prefer Notion over local files when the MCP is available.
+When Notion is connected, 11 files sync to Notion — 4 profile files and 7 memory files.
+Always prefer Notion over local files when the API is available. financials.md is the only exception — always read and write locally.
 
 ### Page Mapping
 
