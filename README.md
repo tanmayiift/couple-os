@@ -75,9 +75,27 @@ claude
 /onboard
 ```
 
-That's it. Three quick rounds of conversation (who you are, what you like, practical stuff), and then the system generates your first personalized date idea right there. Takes about 5 minutes.
+Three quick rounds of conversation (who you are, what you like, practical stuff), and then the system generates your first personalized date idea right there. Takes about 5 minutes.
 
-After that, run `/date-idea` anytime you need a plan.
+After that, the full command set is available:
+
+```
+/date-idea        → date suggestion for this week + 2 alternatives
+/mood-match       → one thing calibrated to tonight's energy, right now
+/date-batch       → 4 dates planned for the month
+/trip-idea        → your next getaway
+/surprise [name]  → plan something for your partner (stays local, never syncs)
+/feedback         → rate the date — makes future suggestions smarter
+/memory-jar       → log or read favourite shared moments
+/milestone-letter → a letter about the period just passed
+/streak           → see your consecutive months of logged dates
+/vibe-check       → quarterly quiz — both answer separately, then compare
+/activity-pack    → 5 shared activities and rituals to try
+/checkin          → conversation starters for tonight
+/week-ritual      → one small recurring habit to add
+/remember         → tell the system anything new
+/init             → connect shared Notion memory with your partner (optional)
+```
 
 ---
 
