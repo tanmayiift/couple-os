@@ -34,13 +34,13 @@ argument-hint: <what to remember>
 
 ## Notion Sync
 
-For memory files (past-dates, past-trips, learnings, wishlist):
-1. Write update to corresponding Notion page first (if MCP is available)
+For memory files (past-dates, past-trips, learnings, wishlist) AND profile files (couple-profile, preferences, constraints, local-context):
+1. Write update to corresponding Notion page first (if API is available)
 2. Also write to local markdown file as backup
 3. If Notion write fails, write locally and note: "Saved locally — Notion sync failed."
 
-For context files (couple-profile, preferences, financials, constraints, local-context):
-- Write locally only (these don't sync to Notion)
+For financials.md only:
+- Write locally only — never sync to Notion (sensitive data)
 
 ## Confirmation
 ```

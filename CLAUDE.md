@@ -213,23 +213,29 @@ Always prefer Notion over local files when the MCP is available.
 
 ### Page Mapping
 
-| Local file | Notion page |
-|-----------|-------------|
-| memory/past-dates.md | "Past Dates" |
-| memory/past-trips.md | "Past Trips" |
-| memory/learnings.md | "Learnings" |
-| memory/wishlist.md | "Wishlist" |
-| memory/memory-jar.md | "Memory Jar" |
-| memory/streak.md | "Streak" |
-| memory/vibe-check-history.md | "Vibe Check History" |
+| Local file | Notion page | Syncs? |
+|-----------|-------------|--------|
+| couple-profile.md | "Couple Profile" | ✓ |
+| preferences.md | "Preferences" | ✓ |
+| constraints.md | "Constraints" | ✓ |
+| local-context.md | "Local Context" | ✓ |
+| financials.md | — | ✗ local only (sensitive) |
+| memory/past-dates.md | "Past Dates" | ✓ |
+| memory/past-trips.md | "Past Trips" | ✓ |
+| memory/learnings.md | "Learnings" | ✓ |
+| memory/wishlist.md | "Wishlist" | ✓ |
+| memory/memory-jar.md | "Memory Jar" | ✓ |
+| memory/streak.md | "Streak" | ✓ |
+| memory/vibe-check-history.md | "Vibe Check History" | ✓ |
 
 ### Read Protocol
 
 Before any suggestion command:
-1. Check if Notion MCP is available (attempt a simple read)
-2. If yes: read from Notion pages
-3. If no: fall back to local memory/ markdown files
+1. Check if Notion API is available (attempt a simple read)
+2. If yes: read from Notion pages (prefer Notion over local for all synced files)
+3. If no: fall back to local markdown files
 4. Never fail silently — if Notion read fails, say so and use local fallback
+5. financials.md: always read locally, never from Notion
 
 ### Write Protocol
 
@@ -237,6 +243,13 @@ After any /feedback, /remember, /mood-match, /vibe-check, /memory-jar, /streak:
 1. Write update to Notion page
 2. Also write to local markdown file as backup
 3. Confirm: "Saved to Notion — both partners will see this update"
+
+After any update to couple-profile, preferences, constraints, or local-context:
+1. Write to Notion page (overwrite or append as appropriate)
+2. Write to local file as backup
+3. Confirm: "Saved to Notion — Smrati will see this update"
+
+financials.md updates: write locally only, never to Notion.
 
 ### Two-Partner Awareness
 

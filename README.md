@@ -165,15 +165,22 @@ couple-os/
 
 All personal data stays on your machine by default. The context files (your names, budget, preferences) are plain markdown in this directory and are gitignored.
 
-**Optional Notion sync:** Run `/init` to set up a shared Notion workspace with your partner. When connected, memory files (past dates, learnings, wishlist, memory jar, etc.) sync to Notion so both partners see the same data. Local markdown files stay as backup. The 5 core profile files (couple-profile, preferences, financials, constraints, local-context) never sync — they stay local only.
+**Optional Notion sync:** Run `/init` to set up a shared Notion workspace with your partner. When connected, 11 pages sync automatically so both partners always see the same data. Local markdown files stay as backup.
+
+**What syncs vs what stays local:**
+| Syncs to Notion | Stays local only |
+|----------------|-----------------|
+| Couple Profile, Preferences, Constraints, Local Context | **Financials** (sensitive — never leaves your machine) |
+| Past Dates, Past Trips, Learnings, Wishlist | `/surprise` outputs (partner must never see these) |
+| Memory Jar, Streak, Vibe Check History | |
 
 **What you do vs what Claude does during `/init`:**
-- You create: one Notion account, one top-level page ("Couple OS Memory"), one integration token. That's it.
-- Claude creates: all 7 sub-pages automatically once connected. No manual page creation needed.
+- You do: create one Notion account, one page, one integration token, run two shell commands. That's it.
+- Claude does: checks for existing pages before creating (never duplicates), creates all 11 sub-pages, populates them from your local files, records page IDs.
 
-**Notion pages are private, not public.** Share only with your partner via email (Editor access) through Notion's Share menu. Never enable "Share to web."
+**Notion pages are private, not public.** Share only with your partner via email (Editor access). Never enable "Share to web."
 
-`/surprise` outputs never sync to Notion. Ever. The whole point is that the other partner doesn't see it coming.
+`/surprise` outputs never sync to Notion. Ever.
 
 Nothing else is sent to any server except your prompts to Claude via the standard Claude Code API (same as any Claude conversation).
 
@@ -221,17 +228,20 @@ Interactive guided setup for shared memory between partners. Run once per couple
 
 **What you do manually (~10 min):**
 1. Create a free Notion account at notion.so
-2. Create one top-level page called "Couple OS Memory"
-3. Go to notion.so/my-integrations → create an integration called "Couple OS" → copy the `secret_` token
+2. Create one top-level page (any name)
+3. Go to notion.so/my-integrations → create an integration called "Couple OS" → copy the token (starts with `ntn_`)
 4. Connect the integration to your page (··· menu → Add connections)
-5. Add `export NOTION_API_KEY="your_token"` to `~/.zshrc` and restart Claude Code
-6. Share the page with your partner by email (Editor access) — keep it private, never enable "Share to web"
+5. Run in terminal: `echo 'export NOTION_API_KEY="your_token"' >> ~/.zshrc && source ~/.zshrc && launchctl setenv NOTION_API_KEY "your_token"`
+6. Restart Claude Code and run `/init` again
+7. Share the page with your partner by email (Editor access) — never enable "Share to web"
 
 **What Claude does automatically:**
-- Creates all 7 sub-pages (Past Dates, Past Trips, Learnings, Wishlist, Memory Jar, Streak, Vibe Check History)
-- Populates structure, records page IDs, verifies the connection
+- Checks for existing pages first — never creates duplicates
+- Creates all 11 sub-pages (4 profile pages + 7 memory pages)
+- Populates them from your local files
+- Records page IDs to `sync/notion-setup.md`
 
-Run `/init` and it walks through every step interactively.
+**For the second partner:** clone the repo, copy the 5 context files from the first partner's machine (AirDrop works), set the same API token, accept the Notion invite. No `/onboard` or `/init` needed.
 
 ### `/date-idea` — Weekly Date Suggestion
 
